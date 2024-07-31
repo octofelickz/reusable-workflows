@@ -1,0 +1,51 @@
+# 'Dependency Review' Reusable Workflow
+#
+# Note: If the default configuration isn't present in your repository, we use the centralised
+# configurations.
+
+name: 'Dependency Review'
+
+on:
+  pull_request:
+  workflow_call:
+
+permissions:
+  contents: read
+  # Required for writing a PR Comment
+  pull-requests: write
+
+jobs:
+  dependency-review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout Repository'
+        uses: actions/checkout@v4
+
+      # [optional] This setup isn't required but if your repository have a configuration,
+      # we use that versus the centralised config. 
+      - name: 'Check for configuration file'
+        id: config
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -e
+          if [ -f "./.github/dependency-review.yml" ]; then
+            echo "Found local configuration file"
+
+            echo "config=./.github/dependency-review.yml" >> $GITHUB_STATE
+
+          else
+            echo "No local configuration file found"
+            echo "Using configuration file from advanced-security/reusable-workflows repository"
+
+            echo "config=octofelickz/reusable-workflows/.github/dependency-review.yml@main" >> $GITHUB_STATE
+
+          fi
+
+      - name: 'Dependency Review'
+        uses: actions/dependency-review-action@v4
+        with:
+          # this value can also be hardcoded to a remote repository
+          # Example: advanced-security/reusable-workflows/.github/dependency-review.yml@main
+          config-file: ${{ steps.config.outputs.config }}
+          comment-summary-in-pr: "always"

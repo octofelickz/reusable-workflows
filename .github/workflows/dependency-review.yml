@@ -53,3 +53,5 @@ jobs:
           config-file: ${{ steps.config.outputs.config }}
           comment-summary-in-pr: "always"
           retry-on-snapshot-warnings: "true"
+          #Also can fail on: unknown
+          fail-on-scopes: runtime, development

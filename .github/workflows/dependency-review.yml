@@ -45,6 +45,9 @@ jobs:
       - name: 'Dependency Review'
         uses: actions/dependency-review-action@v4
         with:
+          license-check: true
+          vulnerability-check: true
+          warn-only: false
           # this value can also be hardcoded to a remote repository
           # Example: advanced-security/reusable-workflows/.github/dependency-review.yml@main
           config-file: ${{ steps.config.outputs.config }}

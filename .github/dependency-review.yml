@@ -7,6 +7,7 @@ comment-summary-in-pr: "always"
 fail-on-severity: moderate
 
 # Set what scope to fail on.
+#fail-on-scopes: runtime, development, unknown
 fail-on-scopes: runtime
 
 # Use only certain licenses

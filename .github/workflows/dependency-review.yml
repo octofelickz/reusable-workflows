@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 'Checkout Repository'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       # [optional] This setup isn't required but if your repository have a configuration,
       # we use that versus the centralised config. 
@@ -43,7 +43,7 @@ jobs:
           fi
 
       - name: 'Dependency Review'
-        uses: actions/dependency-review-action@v4
+        uses: actions/dependency-review-action@v5
         with:
           license-check: true
           vulnerability-check: true
